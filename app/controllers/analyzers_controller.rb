@@ -6,10 +6,10 @@ class AnalyzersController < ApplicationController
       render :index and return
     end
 
-    version = Version::LUCENE_47
-    analyzer = WhitespaceAnalyzer.new(version)
+    analyzer = Analyzer.find(params[:analyzer])
     text = params[:text]
 
-    @tokenizer = TokenizerDecorator.new(Tokenizer.new(analyzer, text))
+    tokenizer = Tokenizer.new(analyzer, text)
+    @tokenizer = TokenizerDecorator.new(tokenizer)
   end
 end

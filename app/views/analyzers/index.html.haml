@@ -4,7 +4,7 @@
   = text_field_tag :text, params[:text]
 
   = label_tag :analyzer, 'Your analyzer'
-  = select_tag :analyzer, options_for_select([['Whitespace', 'whitespace']], params[:analyzer])
+  = select_tag :analyzer, options_for_select(analyzer_options, params[:analyzer])
 
   = button_tag 'Analyze', value: 'analyze'
 

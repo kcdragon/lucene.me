@@ -15,7 +15,12 @@ Dir["#{File.dirname(__FILE__)}/../vendor/jars/*.jar"].each do |jar|
   require jar
 end
 
+# Analyzers
 java_import 'org.apache.lucene.analysis.core.WhitespaceAnalyzer'
+java_import 'org.apache.lucene.analysis.core.StopAnalyzer'
+java_import 'org.apache.lucene.analysis.core.SimpleAnalyzer'
+java_import 'org.apache.lucene.analysis.standard.StandardAnalyzer'
+
 java_import 'org.apache.lucene.analysis.tokenattributes.CharTermAttribute'
 java_import 'org.apache.lucene.analysis.tokenattributes.OffsetAttribute'
 java_import 'org.apache.lucene.util.Version'
