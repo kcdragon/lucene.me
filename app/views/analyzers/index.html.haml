@@ -1,0 +1,15 @@
+%h1 Analyze Me!
+= form_tag analyzers_path, method: 'get' do
+  = label_tag :text, 'Your text to analyze'
+  = text_field_tag :text, params[:text]
+
+  = label_tag :analyzer, 'Your analyzer'
+  = select_tag :analyzer, options_for_select([['Whitespace', 'whitespace']], params[:analyzer])
+
+  = button_tag 'Analyze', value: 'analyze'
+
+- if @tokenizer.present?
+  %h2 Tokens
+  %ul
+    - @tokenizer.each do |token|
+      %li= token
