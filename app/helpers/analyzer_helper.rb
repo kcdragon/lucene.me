@@ -1,8 +1,6 @@
 module AnalyzerHelper
 
-  def analyzer_options
-    Analyzer.built_in_analyzers.keys.map do |analyzer|
-      [analyzer.titleize, analyzer]
-    end
+  def analyzer_ids
+    Analyzer.built_in_analyzers.keys
   end
 end

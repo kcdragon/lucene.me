@@ -3,10 +3,10 @@ require 'spec_helper'
 feature 'analyzers' do
 
   scenario 'display tokens for analyzer' do
-    visit '/'
+    visit analyzers_path
 
     fill_in :text, with: "Foo Bar"
-    select 'Whitespace', from: :analyzer
+    check 'analyzer_whitespace'
     click_button 'analyze'
 
     page.should have_content '[Foo]'

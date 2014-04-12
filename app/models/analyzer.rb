@@ -1,4 +1,7 @@
 class Analyzer
+  include ActiveModel::Model
+
+  attr_accessor :id, :name, :analyzer
 
   VERSION = Version::LUCENE_47
 
@@ -17,6 +20,12 @@ class Analyzer
   end
 
   def self.find(analyzer_id)
-    built_in_analyzers[analyzer_id].new(VERSION)
+    new(analyzer: built_in_analyzers[analyzer_id].new(VERSION), name: analyzer_id.titleize)
+  end
+
+  # @return [Enumerable]
+  #
+  def tokenize(text)
+    Tokenizer.new(analyzer, text)
   end
 end

@@ -2,14 +2,21 @@ class AnalyzersController < ApplicationController
 
   def index
     if params[:text].blank?
-      @tokenizer = []
+      @analyzers = []
       render :index and return
     end
 
-    analyzer = Analyzer.find(params[:analyzer])
-    text = params[:text]
+    @analyzers = analyzers.map do |analyzer|
+      analyzer = Analyzer.find(analyzer)
+      AnalyzerDecorator.new(analyzer, text: text)
+    end
+  end
 
-    tokenizer = Tokenizer.new(analyzer, text)
-    @tokenizer = TokenizerDecorator.new(tokenizer)
+  def analyzers
+    params[:analyzers] || []
+  end
+
+  def text
+    params[:text]
   end
 end

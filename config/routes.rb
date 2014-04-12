@@ -1,7 +1,8 @@
 Rails.application.routes.draw do
   resources :analyzers, only: :index
+  resource :home, only: :show
 
-  root 'analyzers#index'
+  root 'home#show'
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

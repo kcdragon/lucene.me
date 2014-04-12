@@ -1,15 +1,35 @@
-%h1 Analyze Me!
+.row
+  %h1 Analyzer
+
 = form_tag analyzers_path, method: 'get' do
-  = label_tag :text, 'Your text to analyze'
-  = text_field_tag :text, params[:text]
+  .row
+    = label_tag :text, 'Text to Analyze'
+    = text_area_tag :text, params[:text], required: true
 
-  = label_tag :analyzer, 'Your analyzer'
-  = select_tag :analyzer, options_for_select(analyzer_options, params[:analyzer])
+  .row.analyzers
+    %label Analyzers
+    = check_box_tag 'analyzers_all', nil, params[:analyzers].count == analyzer_ids.count, id: "analyzer_all"
+    = label_tag "analyzer_all", 'All'
 
-  = button_tag 'Analyze', value: 'analyze'
+    - analyzer_ids.each do |analyzer|
+      = check_box_tag 'analyzers[]', analyzer, params[:analyzers].present? && params[:analyzers].include?(analyzer), id: "analyzer_#{analyzer}"
+      = label_tag "analyzer_#{analyzer}", analyzer.titleize
 
-- if @tokenizer.present?
-  %h2 Tokens
-  %ul
-    - @tokenizer.each do |token|
-      %li= token
+  .row
+    = button_tag 'Analyze', value: 'analyze'
+
+.row
+  - if @analyzers.present?
+    %table
+      %thead
+        %tr
+          %th Analyzer
+          %th Tokens
+      %tbody
+        - @analyzers.each do |tokenizer|
+          %tr
+            %td
+              = tokenizer.name
+            %td
+              - tokenizer.each do |token|
+                = token
