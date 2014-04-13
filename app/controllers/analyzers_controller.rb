@@ -2,6 +2,7 @@ class AnalyzersController < ApplicationController
 
   helper_method :selected_analyzer_ids
   helper_method :all_analyzer_ids
+  helper_method :all_analyzers
 
   def index
     if params[:text].blank?
@@ -26,6 +27,10 @@ class AnalyzersController < ApplicationController
   end
 
   def all_analyzer_ids
-    Analyzer.built_in_analyzers.keys
+    Analyzer.all.map(&:id)
+  end
+
+  def all_analyzers
+    Analyzer.all
   end
 end

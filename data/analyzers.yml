@@ -1,0 +1,20 @@
+analyzers:
+  whitespace:
+    name: Whitespace
+    description: Tokenizes on whitespace.
+
+  simple:
+    name: Simple
+    description: Tokenizes on whitespace and lowercases each token.
+
+  stop:
+    name: Stop
+    description: Removes "stop" words like "the" and "a".
+
+  standard:
+    name: Standard
+    description: General-purpose analyzer that does all of the above and more.
+
+  snowball:
+    name: Snowball
+    description: Converts words to their "root" form.

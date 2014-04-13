@@ -1,4 +1,4 @@
-class Tokenizer
+class Lucene::Tokenizer
   include Enumerable
 
   attr_reader :analyzer, :text

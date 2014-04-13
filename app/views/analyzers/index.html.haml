@@ -14,13 +14,18 @@
           %label Analyzers
 
           .row
-            = check_box_tag 'analyzers_all', nil, params[:analyzer_ids] == all_analyzer_ids, id: "analyzer_all"
+            = check_box_tag 'analyzers_all', nil, selected_analyzer_ids == all_analyzer_ids, id: "analyzer_all"
             = label_tag "analyzer_all", 'All'
 
-          - all_analyzer_ids.each do |analyzer_id|
-            .row
-              = check_box_tag 'analyzer_ids[]', analyzer_id, selected_analyzer_ids.include?(analyzer_id), id: "analyzer_#{analyzer_id}"
-              = label_tag "analyzer_#{analyzer_id}", analyzer_id.titleize
+          - all_analyzers.each do |analyzer|
+            .row.collapse.analyzer
+              .small-1.columns
+                = check_box_tag 'analyzer_ids[]', analyzer.id, selected_analyzer_ids.include?(analyzer.id), id: "analyzer_#{analyzer.id}"
+              .small-11.columns
+                = label_tag "analyzer_#{analyzer.id}" do
+                  = analyzer.name
+                  = '-'
+                  %span.note= analyzer.description
 
         .row
           = button_tag 'Analyze', value: 'analyze'

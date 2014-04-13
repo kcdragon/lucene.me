@@ -1,31 +1,37 @@
 class Analyzer
   include ActiveModel::Model
 
-  attr_accessor :id, :name, :analyzer
+  attr_accessor :id, :name, :description, :analyzer
 
-  VERSION = Version::LUCENE_47
-
-  cattr_accessor :built_in_analyzers
-  self.built_in_analyzers = {
-    'whitespace' => WhitespaceAnalyzer,
-    'simple' => SimpleAnalyzer,
-    'stop' => StopAnalyzer,
-    'standard' => StandardAnalyzer
-  }
-
-  def self.all
-    built_in_analyzers.values.map do |klass|
-      klass.new(VERSION)
+  class << self
+    def all
+      cache.values
     end
-  end
 
-  def self.find(analyzer_id)
-    new(analyzer: built_in_analyzers[analyzer_id].new(VERSION), name: analyzer_id.titleize)
+    def find(analyzer_id)
+      cache[analyzer_id]
+    end
+
+    private
+
+    def cache
+      return @cache if defined?(@cache)
+
+      config = YAML.load_file(Rails.root.join('data', 'analyzers.yml'))
+      @cache = config['analyzers'].each_with_object({}) do |(analyzer_id, details), memo|
+        analyzer = Lucene::AnalyzerFactory.new(analyzer_id).build
+
+        name = details['name']
+        description = details['description']
+
+        memo[analyzer_id] = new(id: analyzer_id, name: name, description: description, analyzer: analyzer)
+      end
+    end
   end
 
   # @return [Enumerable]
   #
   def tokenize(text)
-    Tokenizer.new(analyzer, text)
+    Lucene::Tokenizer.new(analyzer, text)
   end
 end
