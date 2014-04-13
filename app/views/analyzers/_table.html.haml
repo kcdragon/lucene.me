@@ -1,0 +1,13 @@
+%table
+  %thead
+    %tr
+      %th Analyzer
+      %th Tokens
+  %tbody
+    - analyzers.each do |tokenizer|
+      %tr
+        %td
+          = tokenizer.name
+        %td
+          - tokenizer.each do |token|
+            = token

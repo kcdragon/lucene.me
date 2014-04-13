@@ -1,35 +1,31 @@
 .row
   %h1 Analyzer
 
-= form_tag analyzers_path, method: 'get' do
-  .row
-    = label_tag :text, 'Text to Analyze'
-    = text_area_tag :text, params[:text], required: true
+.row.collapse
+  = form_tag analyzers_path, method: 'get' do
 
-  .row.analyzers
-    %label Analyzers
-    = check_box_tag 'analyzers_all', nil, params[:analyzers].count == analyzer_ids.count, id: "analyzer_all"
-    = label_tag "analyzer_all", 'All'
+    .row
+      = label_tag :text, 'Text to Analyze'
+      = text_area_tag :text, params[:text], required: true
 
-    - analyzer_ids.each do |analyzer|
-      = check_box_tag 'analyzers[]', analyzer, params[:analyzers].present? && params[:analyzers].include?(analyzer), id: "analyzer_#{analyzer}"
-      = label_tag "analyzer_#{analyzer}", analyzer.titleize
+    .row
+      .small-12.medium-4.columns
+        .row.analyzers
+          %label Analyzers
 
-  .row
-    = button_tag 'Analyze', value: 'analyze'
+          .row
+            = check_box_tag 'analyzers_all', nil, params[:analyzer_ids] == all_analyzer_ids, id: "analyzer_all"
+            = label_tag "analyzer_all", 'All'
 
-.row
-  - if @analyzers.present?
-    %table
-      %thead
-        %tr
-          %th Analyzer
-          %th Tokens
-      %tbody
-        - @analyzers.each do |tokenizer|
-          %tr
-            %td
-              = tokenizer.name
-            %td
-              - tokenizer.each do |token|
-                = token
+          - all_analyzer_ids.each do |analyzer_id|
+            .row
+              = check_box_tag 'analyzer_ids[]', analyzer_id, selected_analyzer_ids.include?(analyzer_id), id: "analyzer_#{analyzer_id}"
+              = label_tag "analyzer_#{analyzer_id}", analyzer_id.titleize
+
+        .row
+          = button_tag 'Analyze', value: 'analyze'
+
+      .small-12.medium-8.columns
+        .row
+          - if @analyzers.present?
+            = render 'analyzers/table', analyzers: @analyzers
