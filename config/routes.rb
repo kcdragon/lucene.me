@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
   resources :analyzers, only: :index
+  resources :synonyms, only: :index
   resource :home, only: :show
 
   root 'home#show'

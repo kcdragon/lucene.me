@@ -2,19 +2,21 @@ require File.expand_path('../boot', __FILE__)
 
 # Pick the frameworks you want:
 require "active_model/railtie"
-# require "active_record/railtie"
 require "action_controller/railtie"
 require "action_mailer/railtie"
 require "action_view/railtie"
 require "sprockets/railtie"
-# require "rails/test_unit/railtie"
 
 require 'java'
+
+java_import 'java.io.StringReader'
 
 Dir["#{File.dirname(__FILE__)}/../vendor/jars/*.jar"].each do |jar|
   require jar
 end
 
+java_import 'org.apache.lucene.analysis.synonym.SynonymFilter'
+java_import 'org.apache.lucene.analysis.standard.StandardTokenizer'
 java_import 'org.apache.lucene.analysis.core.SimpleAnalyzer'
 java_import 'org.apache.lucene.analysis.core.StopAnalyzer'
 java_import 'org.apache.lucene.analysis.core.WhitespaceAnalyzer'
@@ -22,6 +24,7 @@ java_import 'org.apache.lucene.analysis.snowball.SnowballAnalyzer'
 java_import 'org.apache.lucene.analysis.standard.StandardAnalyzer'
 java_import 'org.apache.lucene.analysis.tokenattributes.CharTermAttribute'
 java_import 'org.apache.lucene.analysis.tokenattributes.OffsetAttribute'
+java_import 'org.apache.lucene.analysis.synonym.SolrSynonymParser'
 java_import 'org.apache.lucene.util.Version'
 
 # Require the gems listed in Gemfile, including any gems

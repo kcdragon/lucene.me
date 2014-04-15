@@ -1,0 +1,27 @@
+.row
+  %h1 Synonyms
+
+.row
+  .small-12.medium-6.columns
+    .row.collapse
+      = form_tag synonyms_path, method: 'get' do
+
+        .row
+          = label_tag :synonyms
+          = text_area_tag :synonyms, params[:synonyms]
+
+        .row
+          = label_tag :text
+          = text_area_tag :text, params[:text]
+
+        .row
+          = button_tag 'Generate', value: 'generate'
+
+  .small-12.medium-6.columns
+    .row.collapse
+      %label Tokens
+      - if @tokens.present?
+        - @tokens.each do |token|
+          = "[#{token}]"
+      - else
+        Enter synonyms and text to get started.

@@ -49,6 +49,7 @@ end
 
 group :development, :test do
   gem 'spring-commands-rspec', '1.0.1'
+  gem 'pry', '0.9.12.6'
 end
 
 group :test do

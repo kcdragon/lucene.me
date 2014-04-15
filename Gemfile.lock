@@ -237,6 +237,7 @@ DEPENDENCIES
   jbuilder (~> 2.0)
   jquery-rails
   launchy (= 2.4.2)
+  pry (= 0.9.12.6)
   puma (= 2.8.2)
   quiet_assets
   rails (= 4.1.0)
